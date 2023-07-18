@@ -1,0 +1,425 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false,
+            "minWidth": 50,
+            "width": 200
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Processor Name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "https://dataflow.stellio.io/nifi/?processGroupId=${__data.fields[\"Process Group Id\"]}&componentIds=${__data.fields.component_id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 255
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Relationship"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "unmatched": {
+                        "color": "dark-red",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  },
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "transparent",
+                        "index": 1
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Details"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 445
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "File size"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 149
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "component_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Process Group Id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Event Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time:DD/MM/YYYY HH:mm:ss"
+              },
+              {
+                "id": "custom.width",
+                "value": 172
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Processor Type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 174
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Event Type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 178
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Process Group"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 250
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 29,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.0.1",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "aa4173c3-2342-425f-8dbd-2e76eb079ef7"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "entry_date"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "@timestamp": true,
+              "_id": true,
+              "_index": true,
+              "_source": true,
+              "_type": true,
+              "attributes": false,
+              "child_ids": true,
+              "component_id": false,
+              "details": false,
+              "entry_date": true,
+              "event_duration_millis": true,
+              "event_duration_seconds": true,
+              "event_id": true,
+              "event_time": false,
+              "file_size": true,
+              "flow_file_id": true,
+              "highlight": true,
+              "lineage_start_date": true,
+              "parent_ids": true,
+              "previous_file_size": true,
+              "root_group_name": true,
+              "sort": true,
+              "source_queue_id": true
+            },
+            "indexByName": {
+              "@timestamp": 2,
+              "_id": 13,
+              "_index": 14,
+              "_source": 15,
+              "_type": 16,
+              "attributes": 27,
+              "attributes.CLDC": 67,
+              "attributes.Cache-Control": 28,
+              "attributes.Connection": 29,
+              "attributes.Content-Length": 30,
+              "attributes.Content-Type": 31,
+              "attributes.Date": 32,
+              "attributes.Expires": 33,
+              "attributes.Link": 58,
+              "attributes.Pragma": 34,
+              "attributes.Referrer-Policy": 35,
+              "attributes.RouteOnAttribute.Route": 68,
+              "attributes.Server": 36,
+              "attributes.Strict-Transport-Security": 37,
+              "attributes.Vary": 38,
+              "attributes.X-Content-Type-Options": 39,
+              "attributes.X-Frame-Options": 40,
+              "attributes.X-XSS-Protection": 41,
+              "attributes.context": 69,
+              "attributes.devui": 59,
+              "attributes.endTime": 70,
+              "attributes.entityId": 42,
+              "attributes.filename": 17,
+              "attributes.fragment.count": 43,
+              "attributes.fragment.identifier": 44,
+              "attributes.fragment.index": 45,
+              "attributes.humidity": 60,
+              "attributes.invokehttp.remote.dn": 46,
+              "attributes.invokehttp.request.duration": 47,
+              "attributes.invokehttp.request.url": 48,
+              "attributes.invokehttp.response.url": 49,
+              "attributes.invokehttp.status.code": 50,
+              "attributes.invokehttp.status.message": 51,
+              "attributes.invokehttp.tx.id": 52,
+              "attributes.mime.type": 53,
+              "attributes.observedAt": 61,
+              "attributes.path": 18,
+              "attributes.pointId": 71,
+              "attributes.productName": 72,
+              "attributes.restlistener.remote.issuer.dn": 62,
+              "attributes.restlistener.remote.source.host": 63,
+              "attributes.restlistener.remote.user.dn": 64,
+              "attributes.restlistener.request.uri": 65,
+              "attributes.segment.original.filename": 54,
+              "attributes.startTime": 73,
+              "attributes.temperature": 66,
+              "attributes.uuid": 19,
+              "child_ids": 55,
+              "component_id": 1,
+              "component_name": 5,
+              "component_type": 6,
+              "details": 9,
+              "entry_date": 0,
+              "event_duration_millis": 21,
+              "event_duration_seconds": 22,
+              "event_id": 23,
+              "event_time": 3,
+              "event_type": 7,
+              "file_size": 20,
+              "flow_file_id": 11,
+              "highlight": 24,
+              "lineage_start_date": 10,
+              "parent_ids": 56,
+              "previous_file_size": 12,
+              "process_group_id": 57,
+              "process_group_name": 4,
+              "relationship": 8,
+              "sort": 25,
+              "source_queue_id": 26
+            },
+            "renameByName": {
+              "@timestamp": "Event Date",
+              "attributes.path": "",
+              "attributes.validation.error.message": "Error message attributes",
+              "component_id": "",
+              "component_name": "Processor Name",
+              "component_type": "Processor Type",
+              "details": "Details",
+              "entry_date": "Entry Date",
+              "event_duration_seconds": "",
+              "event_time": "Event Time",
+              "event_type": "Event Type",
+              "file_size": "File size",
+              "process_group_id": "Process Group Id",
+              "process_group_name": "Process Group",
+              "relationship": "Relationship"
+            }
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "pattern": "/^(?!attributes).*/"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now-15d"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Provenance events (BOR)",
+  "uid": "b78d3036-db28-47dc-ac4e-47cd9d61e3fc",
+  "version": 11,
+  "weekStart": ""
+}
