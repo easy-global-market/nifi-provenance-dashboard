@@ -30,6 +30,221 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "displayLabels": [
+          "name",
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "process_group_name.keyword",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "0"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "event_time"
+        }
+      ],
+      "title": "Activité par process group",
+      "transformations": [],
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 3,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "process_group_name.keyword",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "event_time",
+              "id": "3",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "timeZone": "utc",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "event_time"
+        }
+      ],
+      "title": "Répartition temporelle par process group",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {}
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "thresholds"
           },
           "custom": {
@@ -42,12 +257,26 @@
             "minWidth": 50,
             "width": 200
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "Error": {
+                  "color": "semi-dark-orange",
+                  "index": 0
+                },
+                "Info": {
+                  "color": "super-light-blue",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
-                "color": "green",
+                "color": "#00000000",
                 "value": null
               }
             ]
@@ -65,7 +294,7 @@
                 "value": [
                   {
                     "title": "",
-                    "url": "https://dataflow.stellio.io/nifi/?processGroupId=${__data.fields[\"Process Group Id\"]}&componentIds=${__data.fields.component_id}"
+                    "url": "${__data.fields.component_url}"
                   }
                 ]
               },
@@ -78,72 +307,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Relationship"
-            },
-            "properties": [
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background"
-                }
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-GrYlRd"
-                }
-              },
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "unmatched": {
-                        "color": "dark-red",
-                        "index": 0
-                      }
-                    },
-                    "type": "value"
-                  },
-                  {
-                    "options": {
-                      "match": "null",
-                      "result": {
-                        "color": "transparent",
-                        "index": 1
-                      }
-                    },
-                    "type": "special"
-                  }
-                ]
-              },
-              {
-                "id": "custom.width",
-                "value": 148
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "Details"
             },
             "properties": [
               {
                 "id": "custom.width",
                 "value": 445
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "File size"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 149
               }
             ]
           },
@@ -222,6 +391,136 @@
                 "value": 250
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Previous attributes"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "json-view"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Updated attributes"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "json-view"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Download input content"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Download",
+                    "url": "${__data.fields[\"Download input content\"]}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Download output content"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Download",
+                    "url": "${__data.fields[\"Download output content\"]}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "View input content"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "View",
+                    "url": "${__data.fields[\"View input content\"]}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "View output content"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "View",
+                    "url": "${__data.fields[\"View output content\"]}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "component_url"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
           }
         ]
       },
@@ -229,7 +528,7 @@
         "h": 29,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 12
       },
       "id": 1,
       "options": {
@@ -246,17 +545,18 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "",
           "bucketAggs": [],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "aa4173c3-2342-425f-8dbd-2e76eb079ef7"
+            "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
           },
           "metrics": [
             {
+              "hide": false,
               "id": "1",
               "settings": {
                 "limit": "500"
@@ -266,7 +566,7 @@
           ],
           "query": "",
           "refId": "A",
-          "timeField": "entry_date"
+          "timeField": "event_time"
         }
       ],
       "transformations": [
@@ -282,6 +582,7 @@
               "attributes": false,
               "child_ids": true,
               "component_id": false,
+              "component_url": false,
               "details": false,
               "entry_date": true,
               "event_duration_millis": true,
@@ -299,80 +600,27 @@
               "source_queue_id": true
             },
             "indexByName": {
-              "@timestamp": 2,
-              "_id": 13,
-              "_index": 14,
-              "_source": 15,
-              "_type": 16,
-              "attributes": 27,
-              "attributes.CLDC": 67,
-              "attributes.Cache-Control": 28,
-              "attributes.Connection": 29,
-              "attributes.Content-Length": 30,
-              "attributes.Content-Type": 31,
-              "attributes.Date": 32,
-              "attributes.Expires": 33,
-              "attributes.Link": 58,
-              "attributes.Pragma": 34,
-              "attributes.Referrer-Policy": 35,
-              "attributes.RouteOnAttribute.Route": 68,
-              "attributes.Server": 36,
-              "attributes.Strict-Transport-Security": 37,
-              "attributes.Vary": 38,
-              "attributes.X-Content-Type-Options": 39,
-              "attributes.X-Frame-Options": 40,
-              "attributes.X-XSS-Protection": 41,
-              "attributes.context": 69,
-              "attributes.devui": 59,
-              "attributes.endTime": 70,
-              "attributes.entityId": 42,
-              "attributes.filename": 17,
-              "attributes.fragment.count": 43,
-              "attributes.fragment.identifier": 44,
-              "attributes.fragment.index": 45,
-              "attributes.humidity": 60,
-              "attributes.invokehttp.remote.dn": 46,
-              "attributes.invokehttp.request.duration": 47,
-              "attributes.invokehttp.request.url": 48,
-              "attributes.invokehttp.response.url": 49,
-              "attributes.invokehttp.status.code": 50,
-              "attributes.invokehttp.status.message": 51,
-              "attributes.invokehttp.tx.id": 52,
-              "attributes.mime.type": 53,
-              "attributes.observedAt": 61,
-              "attributes.path": 18,
-              "attributes.pointId": 71,
-              "attributes.productName": 72,
-              "attributes.restlistener.remote.issuer.dn": 62,
-              "attributes.restlistener.remote.source.host": 63,
-              "attributes.restlistener.remote.user.dn": 64,
-              "attributes.restlistener.request.uri": 65,
-              "attributes.segment.original.filename": 54,
-              "attributes.startTime": 73,
-              "attributes.temperature": 66,
-              "attributes.uuid": 19,
-              "child_ids": 55,
-              "component_id": 1,
-              "component_name": 5,
-              "component_type": 6,
-              "details": 9,
-              "entry_date": 0,
-              "event_duration_millis": 21,
-              "event_duration_seconds": 22,
-              "event_id": 23,
-              "event_time": 3,
-              "event_type": 7,
-              "file_size": 20,
-              "flow_file_id": 11,
-              "highlight": 24,
-              "lineage_start_date": 10,
-              "parent_ids": 56,
-              "previous_file_size": 12,
-              "process_group_id": 57,
-              "process_group_name": 4,
-              "relationship": 8,
-              "sort": 25,
-              "source_queue_id": 26
+              "_id": 5,
+              "_index": 6,
+              "_source": 7,
+              "_type": 8,
+              "component_name": 2,
+              "component_type": 3,
+              "component_url": 12,
+              "details": 20,
+              "download_input_content_uri": 15,
+              "download_output_content_uri": 16,
+              "event_time": 0,
+              "event_type": 19,
+              "highlight": 9,
+              "previous_attributes": 13,
+              "process_group_id": 11,
+              "process_group_name": 1,
+              "sort": 10,
+              "status": 4,
+              "updated_attributes": 14,
+              "view_input_content_uri": 17,
+              "view_output_content_uri": 18
             },
             "renameByName": {
               "@timestamp": "Event Date",
@@ -382,14 +630,22 @@
               "component_name": "Processor Name",
               "component_type": "Processor Type",
               "details": "Details",
+              "download_input_content_uri": "Download input content",
+              "download_output_content_uri": "Download output content",
               "entry_date": "Entry Date",
               "event_duration_seconds": "",
               "event_time": "Event Time",
               "event_type": "Event Type",
               "file_size": "File size",
+              "previous_attributes": "Previous attributes",
               "process_group_id": "Process Group Id",
               "process_group_name": "Process Group",
-              "relationship": "Relationship"
+              "relationship": "Relationship",
+              "status": "Status",
+              "updated_atributes": "Updated attributes",
+              "updated_attributes": "Updated attributes",
+              "view_input_content_uri": "View input content",
+              "view_output_content_uri": "View output content"
             }
           }
         },
@@ -397,7 +653,7 @@
           "id": "filterFieldsByName",
           "options": {
             "include": {
-              "pattern": "/^(?!attributes).*/"
+              "pattern": "/^(?!Attributes).*/"
             }
           }
         }
@@ -405,7 +661,7 @@
       "type": "table"
     }
   ],
-  "refresh": "",
+  "refresh": "5m",
   "schemaVersion": 38,
   "style": "dark",
   "tags": [],
@@ -413,13 +669,13 @@
     "list": []
   },
   "time": {
-    "from": "now-30d",
-    "to": "now-15d"
+    "from": "now-24h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Provenance events (BOR)",
+  "title": "Provenance events",
   "uid": "b78d3036-db28-47dc-ac4e-47cd9d61e3fc",
-  "version": 11,
+  "version": 29,
   "weekStart": ""
 }
