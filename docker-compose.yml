@@ -1,8 +1,9 @@
 version: '3'
 services:
     elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
         container_name: elasticsearch-provenance
+        restart: unless-stopped
         environment:
             - discovery.type=single-node
             - http.port=9200
@@ -23,9 +24,9 @@ services:
         volumes:
             - elasticsearch-storage:/usr/share/elasticsearch/data
     grafana:
-        image: grafana/grafana:10.1.5
+        image: grafana/grafana:10.2.6
         container_name: grafana-provenance
-        restart: always
+        restart: unless-stopped
         environment:
             GF_INSTALL_PLUGINS: grafana-piechart-panel
             GF_FEATURE_TOGGLES_ENABLE: prometheusMetricEncyclopedia,enableDatagridEditing
