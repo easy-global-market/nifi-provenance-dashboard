@@ -1,4 +1,47 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_ELASTICSEARCH",
+      "label": "Elasticsearch",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "elasticsearch",
+      "pluginName": "Elasticsearch"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "version": "1.0.0"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.1.5"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -18,14 +61,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+        "uid": "${DS_ELASTICSEARCH}"
       },
       "fieldConfig": {
         "defaults": {
@@ -95,7 +138,7 @@
           ],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+            "uid": "${DS_ELASTICSEARCH}"
           },
           "metrics": [
             {
@@ -115,7 +158,7 @@
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+        "uid": "${DS_ELASTICSEARCH}"
       },
       "fieldConfig": {
         "defaults": {
@@ -202,7 +245,7 @@
               "type": "terms"
             },
             {
-              "field": "event_time",
+              "field": "event_time_iso_utc",
               "id": "3",
               "settings": {
                 "interval": "auto",
@@ -215,7 +258,7 @@
           ],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+            "uid": "${DS_ELASTICSEARCH}"
           },
           "metrics": [
             {
@@ -225,7 +268,7 @@
           ],
           "query": "",
           "refId": "A",
-          "timeField": "event_time"
+          "timeField": "event_time_iso_utc"
         }
       ],
       "title": "Répartition temporelle par process group",
@@ -240,7 +283,7 @@
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+        "uid": "${DS_ELASTICSEARCH}"
       },
       "fieldConfig": {
         "defaults": {
@@ -552,7 +595,7 @@
           "bucketAggs": [],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "d346f3c8-0108-48fd-a52b-7b4930a2dc9d"
+            "uid": "${DS_ELASTICSEARCH}"
           },
           "metrics": [
             {
@@ -610,7 +653,7 @@
               "details": 20,
               "download_input_content_uri": 15,
               "download_output_content_uri": 16,
-              "event_time": 0,
+              "event_time_iso_utc": 0,
               "event_type": 19,
               "highlight": 9,
               "previous_attributes": 13,
@@ -635,6 +678,7 @@
               "entry_date": "Entry Date",
               "event_duration_seconds": "",
               "event_time": "Event Time",
+              "event_time_iso_utc": "Event time",
               "event_type": "Event Type",
               "file_size": "File size",
               "previous_attributes": "Previous attributes",
@@ -669,13 +713,13 @@
     "list": []
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-10d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Provenance events",
   "uid": "b78d3036-db28-47dc-ac4e-47cd9d61e3fc",
-  "version": 29,
+  "version": 30,
   "weekStart": ""
 }
