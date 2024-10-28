@@ -1,0 +1,964 @@
+{
+    "__inputs": [
+        {
+            "name": "DS_ELASTICSEARCH",
+            "label": "Elasticsearch",
+            "description": "",
+            "type": "datasource",
+            "pluginId": "elasticsearch",
+            "pluginName": "Elasticsearch"
+        }
+    ],
+    "__elements": {},
+    "__requires": [
+        {
+            "type": "panel",
+            "id": "canvas",
+            "name": "Canvas",
+            "version": ""
+        },
+        {
+            "type": "datasource",
+            "id": "elasticsearch",
+            "name": "Elasticsearch",
+            "version": "1.0.0"
+        },
+        {
+            "type": "grafana",
+            "id": "grafana",
+            "name": "Grafana",
+            "version": "11.2.0"
+        },
+        {
+            "type": "panel",
+            "id": "piechart",
+            "name": "Pie chart",
+            "version": ""
+        },
+        {
+            "type": "panel",
+            "id": "table",
+            "name": "Table",
+            "version": ""
+        },
+        {
+            "type": "panel",
+            "id": "timeseries",
+            "name": "Time series",
+            "version": ""
+        }
+    ],
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": null,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_ELASTICSEARCH}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Value"
+                        },
+                        "properties": []
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 3,
+                "w": 3,
+                "x": 21,
+                "y": 0
+            },
+            "id": 4,
+            "options": {
+                "infinitePan": false,
+                "inlineEditing": false,
+                "panZoom": false,
+                "root": {
+                    "background": {
+                        "color": {
+                            "fixed": "transparent"
+                        }
+                    },
+                    "border": {
+                        "color": {
+                            "fixed": "dark-green"
+                        }
+                    },
+                    "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                    },
+                    "elements": [
+                        {
+                            "background": {
+                                "color": {
+                                    "fixed": "transparent"
+                                }
+                            },
+                            "border": {
+                                "color": {
+                                    "fixed": "dark-green"
+                                }
+                            },
+                            "config": {
+                                "align": "center",
+                                "api": {
+                                    "contentType": "application/json",
+                                    "data": "{\n  \"query\": {\n       \"bool\": {\n            \"must\": [\n                {\n                    \"terms\": {\n                        \"process_group_name.keyword\": ${process_group_name:json}\n                    }\n                },\n                {\n                    \"term\": {\n                        \"status.keyword\": \"Error\"\n                    }\n                },\n                {\n                    \"range\": {\n                        \"event_time_iso_utc\": {\n                            \"gte\": \"${__from:date:iso}\",\n                            \"lte\": \"${__to:date:iso}\",\n                            \"format\": \"strict_date_optional_time\"\n                        }\n                    }\n                }\n            ]\n       }\n  },\n  \"script\": {\n    \"source\": \"ctx._source['status'] = 'Resolved'\",\n    \"lang\": \"painless\"\n  }\n}",
+                                    "endpoint": "https://dataflow-es.stellio.io/nifi/_update_by_query",
+                                    "headerParams": [],
+                                    "method": "POST",
+                                    "queryParams": []
+                                },
+                                "color": {
+                                    "fixed": "#F0F4FD"
+                                },
+                                "size": 14,
+                                "style": {
+                                    "variant": "primary"
+                                },
+                                "text": {
+                                    "fixed": "Resolve",
+                                    "mode": "fixed"
+                                }
+                            },
+                            "constraint": {
+                                "horizontal": "left",
+                                "vertical": "top"
+                            },
+                            "name": "Resolve",
+                            "oneClickMode": "off",
+                            "placement": {
+                                "height": 45,
+                                "left": 32,
+                                "top": 7,
+                                "width": 150
+                            },
+                            "type": "button"
+                        }
+                    ],
+                    "name": "Element 1725202218108",
+                    "oneClickMode": "off",
+                    "placement": {
+                        "height": 100,
+                        "left": 0,
+                        "rotation": 0,
+                        "top": 0,
+                        "width": 100
+                    },
+                    "type": "frame"
+                },
+                "showAdvancedTypes": true
+            },
+            "pluginVersion": "11.2.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "event_time_iso_utc",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto"
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "${DS_ELASTICSEARCH}"
+                    },
+                    "metrics": [
+                        {
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "",
+                    "refId": "A",
+                    "timeField": "event_time_iso_utc"
+                }
+            ],
+            "title": "Actions",
+            "type": "canvas"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_ELASTICSEARCH}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "center",
+                        "cellOptions": {
+                            "type": "auto"
+                        },
+                        "filterable": true,
+                        "inspect": false,
+                        "minWidth": 50,
+                        "width": 200
+                    },
+                    "mappings": [
+                        {
+                            "options": {
+                                "Error": {
+                                    "color": "semi-dark-orange",
+                                    "index": 0
+                                },
+                                "Info": {
+                                    "color": "super-light-blue",
+                                    "index": 1
+                                },
+                                "Resolved": {
+                                    "color": "light-green",
+                                    "index": 2
+                                }
+                            },
+                            "type": "value"
+                        }
+                    ],
+                    "thresholds": {
+                        "mode": "percentage",
+                        "steps": [
+                            {
+                                "color": "#00000000",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Processor Name"
+                        },
+                        "properties": [
+                            {
+                                "id": "links",
+                                "value": [
+                                    {
+                                        "title": "",
+                                        "url": "${__data.fields.component_url}"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "custom.width",
+                                "value": 255
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Details"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 445
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "component_id"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hidden",
+                                "value": true
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Process Group Id"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hidden",
+                                "value": true
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Event Time"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "time:DD/MM/YYYY HH:mm:ss"
+                            },
+                            {
+                                "id": "custom.width",
+                                "value": 172
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Processor Type"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 174
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Event Type"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 178
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Process Group"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 250
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Status"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "color-background"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Previous attributes"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.inspect",
+                                "value": true
+                            },
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "json-view"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Updated attributes"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.inspect",
+                                "value": true
+                            },
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "json-view"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Download input content"
+                        },
+                        "properties": [
+                            {
+                                "id": "links",
+                                "value": [
+                                    {
+                                        "title": "Download",
+                                        "url": "${__data.fields[\"Download input content\"]}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Download output content"
+                        },
+                        "properties": [
+                            {
+                                "id": "links",
+                                "value": [
+                                    {
+                                        "title": "Download",
+                                        "url": "${__data.fields[\"Download output content\"]}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "View input content"
+                        },
+                        "properties": [
+                            {
+                                "id": "links",
+                                "value": [
+                                    {
+                                        "title": "View",
+                                        "url": "${__data.fields[\"View input content\"]}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "View output content"
+                        },
+                        "properties": [
+                            {
+                                "id": "links",
+                                "value": [
+                                    {
+                                        "title": "View",
+                                        "url": "${__data.fields[\"View output content\"]}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "component_url"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hidden",
+                                "value": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 29,
+                "w": 24,
+                "x": 0,
+                "y": 3
+            },
+            "id": 1,
+            "options": {
+                "cellHeight": "md",
+                "footer": {
+                    "countRows": false,
+                    "enablePagination": true,
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true,
+                "sortBy": []
+            },
+            "pluginVersion": "11.2.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "${DS_ELASTICSEARCH}"
+                    },
+                    "metrics": [
+                        {
+                            "hide": false,
+                            "id": "1",
+                            "settings": {
+                                "limit": "500"
+                            },
+                            "type": "logs"
+                        }
+                    ],
+                    "query": "status.keyword:$status AND process_group_name.keyword:${process_group_name:lucene:percentencode}",
+                    "refId": "A",
+                    "timeField": "event_time_iso_utc"
+                }
+            ],
+            "transformations": [
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "@timestamp": true,
+                            "_id": true,
+                            "_index": true,
+                            "_source": true,
+                            "_type": true,
+                            "attributes": false,
+                            "child_ids": true,
+                            "component_id": false,
+                            "component_url": false,
+                            "details": false,
+                            "entry_date": true,
+                            "event_duration_millis": true,
+                            "event_duration_seconds": true,
+                            "event_id": false,
+                            "event_time": false,
+                            "event_time_iso_utc": false,
+                            "file_size": true,
+                            "flow_file_id": true,
+                            "highlight": true,
+                            "id": true,
+                            "lineage_start_date": true,
+                            "parent_ids": true,
+                            "previous_attributes": true,
+                            "previous_file_size": true,
+                            "root_group_name": true,
+                            "sort": true,
+                            "source_queue_id": true
+                        },
+                        "includeByName": {},
+                        "indexByName": {
+                            "_id": 7,
+                            "_index": 8,
+                            "_source": 9,
+                            "_type": 10,
+                            "component_name": 4,
+                            "component_type": 5,
+                            "component_url": 14,
+                            "details": 22,
+                            "download_input_content_uri": 17,
+                            "download_output_content_uri": 18,
+                            "event_id": 1,
+                            "event_time_iso_utc": 2,
+                            "event_type": 21,
+                            "highlight": 11,
+                            "id": 0,
+                            "previous_attributes": 15,
+                            "process_group_id": 13,
+                            "process_group_name": 3,
+                            "sort": 12,
+                            "status": 6,
+                            "updated_attributes": 16,
+                            "view_input_content_uri": 19,
+                            "view_output_content_uri": 20
+                        },
+                        "renameByName": {
+                            "@timestamp": "Event Date",
+                            "attributes.path": "",
+                            "attributes.validation.error.message": "Error message attributes",
+                            "component_id": "",
+                            "component_name": "Processor Name",
+                            "component_type": "Processor Type",
+                            "details": "Details",
+                            "download_input_content_uri": "Download input content",
+                            "download_output_content_uri": "Download output content",
+                            "entry_date": "Entry Date",
+                            "event_duration_seconds": "",
+                            "event_id": "Event Id",
+                            "event_time": "Event Time",
+                            "event_time_iso_utc": "Event time",
+                            "event_type": "Event Type",
+                            "file_size": "File size",
+                            "id": "",
+                            "previous_attributes": "Previous attributes",
+                            "process_group_id": "Process Group Id",
+                            "process_group_name": "Process Group",
+                            "relationship": "Relationship",
+                            "status": "Status",
+                            "updated_atributes": "Updated attributes",
+                            "updated_attributes": "Updated attributes",
+                            "view_input_content_uri": "View input content",
+                            "view_output_content_uri": "View output content"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "pattern": "/^(?!Attributes).*/"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_ELASTICSEARCH}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": []
+                },
+                "overrides": [
+                    {
+                        "__systemRef": "hideSeriesFrom",
+                        "matcher": {
+                            "id": "byNames",
+                            "options": {
+                                "mode": "exclude",
+                                "names": [
+                                    "Count"
+                                ],
+                                "prefix": "All except:",
+                                "readOnly": true
+                            }
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hideFrom",
+                                "value": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 12,
+                "x": 0,
+                "y": 32
+            },
+            "id": 2,
+            "options": {
+                "displayLabels": [
+                    "name",
+                    "value"
+                ],
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "right",
+                    "showLegend": true,
+                    "values": [
+                        "percent"
+                    ]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "10.1.5",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "process_group_name.keyword",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": "1",
+                                "order": "desc",
+                                "orderBy": "_term",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "${DS_ELASTICSEARCH}"
+                    },
+                    "metrics": [
+                        {
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "status.keyword:$status AND process_group_name.keyword:${process_group_name:lucene:percentencode}",
+                    "refId": "A",
+                    "timeField": "event_time_iso_utc"
+                }
+            ],
+            "title": "Activité par process group",
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_ELASTICSEARCH}"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisGridShow": true,
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "bars",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 3,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green"
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 12,
+                "x": 12,
+                "y": 32
+            },
+            "id": 3,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "process_group_name.keyword",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": "1",
+                                "order": "desc",
+                                "orderBy": "_term",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "field": "event_time_iso_utc",
+                            "id": "3",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "${DS_ELASTICSEARCH}"
+                    },
+                    "metrics": [
+                        {
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "status.keyword:$status AND process_group_name.keyword:${process_group_name:lucene:percentencode}",
+                    "refId": "A",
+                    "timeField": "event_time_iso_utc"
+                }
+            ],
+            "title": "Répartition temporelle par process group",
+            "transformations": [
+                {
+                    "id": "groupBy",
+                    "options": {}
+                }
+            ],
+            "type": "timeseries"
+        }
+    ],
+    "refresh": "5m",
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "allValue": "",
+                "current": {},
+                "datasource": {
+                    "type": "elasticsearch",
+                    "uid": "${DS_ELASTICSEARCH}"
+                },
+                "definition": "{\"find\": \"terms\", \"field\": \"process_group_name.keyword\"}",
+                "hide": 0,
+                "includeAll": true,
+                "label": "Process group",
+                "multi": true,
+                "name": "process_group_name",
+                "options": [],
+                "query": "{\"find\": \"terms\", \"field\": \"process_group_name.keyword\"}",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 1,
+                "type": "query"
+            },
+            {
+                "current": {},
+                "datasource": {
+                    "type": "elasticsearch",
+                    "uid": "${DS_ELASTICSEARCH}"
+                },
+                "definition": "{\"find\": \"terms\", \"field\": \"status.keyword\"}",
+                "hide": 0,
+                "includeAll": true,
+                "label": "Status",
+                "multi": true,
+                "name": "status",
+                "options": [],
+                "query": "{\"find\": \"terms\", \"field\": \"status.keyword\"}",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-2d",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Provenance events",
+    "uid": "b78d3036-db28-47dc-ac4e-47cd9d61e3fc",
+    "version": 50,
+    "weekStart": ""
+}

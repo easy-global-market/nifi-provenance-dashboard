@@ -24,19 +24,15 @@ services:
         volumes:
             - elasticsearch-storage:/usr/share/elasticsearch/data
     grafana:
-        image: grafana/grafana:11.2.0
+        image: grafana/grafana:11.3.0
         container_name: grafana-provenance
         restart: unless-stopped
-        environment:
-            GF_FEATURE_TOGGLES_ENABLE: enableDatagridEditing
-            GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: ick-buttontable-panel
         ports:
             - 3002:3000
         depends_on:
             - elasticsearch
         volumes:
             - grafana-storage:/var/lib/grafana
-            - ./plugins:/var/lib/grafana/plugins
 
 volumes:
   grafana-storage:
