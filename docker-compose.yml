@@ -9,7 +9,7 @@ services:
             - http.cors.enabled=true
             - http.cors.allow-origin=http://localhost:3000,https://dataflow-dashboard.stellio.io
             - http.cors.allow-methods=OPTIONS,POST
-            - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+            - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization,X-Grafana-Action,X-Grafana-Device-Id
             - http.cors.allow-credentials=true
             - bootstrap.memory_lock=true
             - xpack.security.enabled=false
